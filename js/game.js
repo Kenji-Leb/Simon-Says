@@ -18,6 +18,7 @@ const finalLevel = 12;
 let level = 0;
 let highScore = 0;
 let win;
+let turn;
 let compTurn;
 let on = false;
 let flash;
@@ -66,25 +67,31 @@ function clearColor(){
     dataTileRed.style.opacity = '30%';
 }
 
+function flashColor(){
+    dataTileGreen.style.opacity = '100%';
+    dataTileBlue.style.opacity = '100%';
+    dataTileYellow.style.opacity = '100%';
+    dataTileRed.style.opacity = '100%';
+}
 
 startBtn.addEventListener('click', (event) => {
-
-    startGame()
+    const board = document.querySelector('.board');
+    board.style.pointerEvents = 'auto'
+    on = true;
+    startGame();
 })
 
 function startGame(){
 
-    let win = false;
+    win = false;
+    order = []
+    playerOrder = []
     highScore = 0;
-    level = 1;
-    startingLevel.innerHTML = level;
+    startingLevel.innerHTML = 1;
+    turn = 1;
     flash = 0;
     interValId = 0;
     good = true;
-    clearColor();
-
-    const board = document.querySelector('.board');
-    board.style.pointerEvents = 'auto'
 
     for (let i=0; i < 12; i++){
         order.push(Math.floor(Math.random() * 4) + 1);
@@ -97,7 +104,7 @@ function startGame(){
 function gameTurn(){
     on = false;
 
-    if (flash == level){
+    if (flash == turn){
         clearInterval(interValId);
         compTurn = false;
         clearColor();
@@ -169,3 +176,37 @@ dataTileRed.addEventListener('click', (event) =>{
         }
     }
 })
+
+function check(){
+    if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1])
+    good = false;
+
+    if (playerOrder.length == 12 && good) {
+        winGame()
+    }
+
+    if(good == false){
+        flashColor();
+        startingLevel.innerHTML = "wrong"
+        setTimeout(() => {
+            startingLevel.innerHTML = turn;
+            clearColor();
+        }, 800)
+    }
+
+    if (turn == playerOrder.length && good && !win){
+        turn++;
+        playerOrder = [];
+        compTurn = true;
+        flash = 0;
+        startingLevel.innerHTML = turn;
+        interValId = setInterval(gameTurn, 800);
+    }
+}
+
+function winGame(){
+    flashColor();
+    startingLevel.innerHTML = "You Win!"
+    on = false;
+    win = true;
+}
