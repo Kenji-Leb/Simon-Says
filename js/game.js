@@ -1,18 +1,16 @@
 const audioFile = ['blue','green','yellow','red','wrong','game-over','game-win']
 
 const dataTileColors = ['green','blue','yellow','red']
-const gameBoard = document.querySelector(".btoard")
+const gameBoard = document.querySelector(".board")
 const startBtn = document.getElementById("play")
 const startingLevel = document.getElementById("level")
 
 //[data-tile="green"]
 
-const dataTileGreen = document.querySelector('.inactive'); 
-const dataTileYellow = document.querySelector('.inactive'); 
-const dataTileRed = document.querySelector('.inactive'); 
-const dataTileBlue = document.querySelector('.inactive'); 
-
-
+const dataTileGreen = document.querySelector('[data-tile="green"]'); 
+const dataTileYellow = document.querySelector('[data-tile="yellow"]'); 
+const dataTileRed = document.querySelector('[data-tile="red"]'); 
+const dataTileBlue = document.querySelector('[data-tile="blue"]'); 
 
 const finalLevel = 12;
 let level = 0;
@@ -38,25 +36,25 @@ function greenBtn(){
     dataTileGreen.style.opacity = '100%'
 }
 function yellowBtn(){
-    audio = new Audio(`./sounds/${audioFile[2]}.mp3`)
+    let audio = new Audio(`./sounds/${audioFile[2]}.mp3`)
     audio.play();
     dataTileYellow.style.opacity = '100%'
 }
 function redBtn(){
-    audio = new Audio(`./sounds/${audioFile[3]}.mp3`)
+    let audio = new Audio(`./sounds/${audioFile[3]}.mp3`)
     audio.play();
     dataTileRed.style.opacity = '100%'
 }
 function wrongAudio(){
-    audio = new Audio(`./sounds/${audioFile[4]}.mp3`)
+    let audio = new Audio(`./sounds/${audioFile[4]}.mp3`)
     return audio.play();
 }
 function gameOverAudio(){
-    audio = new Audio(`./sounds/${audioFile[5]}.wav`)
+    let audio = new Audio(`./sounds/${audioFile[5]}.wav`)
     return audio.play();
 }
 function gameWinAudio(){
-    audio = new Audio(`./sounds/${audioFile[6]}.wav`)
+    let audio = new Audio(`./sounds/${audioFile[6]}.wav`)
     return audio.play();
 }
 
@@ -93,8 +91,8 @@ function startGame(){
     interValId = 0;
     good = true;
 
-    for (let i=0; i < 12; i++){
-        order.push(Math.floor(Math.random() * 4) + 1);
+    for (let i=0; i < finalLevel; i++){
+        order.push(Math.floor(Math.random() * 4));
     }
     compTurn = true;
 
@@ -125,9 +123,8 @@ function gameTurn(){
 
 
 dataTileGreen.addEventListener('click', (event) =>{
-    console.log("clicked")
     if (on){
-        playerOrder.push(2);
+        playerOrder.push(0);
         check()
         greenBtn()
         if(!win){
@@ -138,7 +135,6 @@ dataTileGreen.addEventListener('click', (event) =>{
     }
 })
 dataTileBlue.addEventListener('click', (event) =>{
-    console.log("clicked")
     if (on){
         playerOrder.push(1);
         check()
@@ -151,9 +147,8 @@ dataTileBlue.addEventListener('click', (event) =>{
     }
 })
 dataTileYellow.addEventListener('click', (event) =>{
-    console.log("clicked")
     if (on){
-        playerOrder.push(3);
+        playerOrder.push(2);
         check()
         yellowBtn()
         if(!win){
@@ -164,9 +159,8 @@ dataTileYellow.addEventListener('click', (event) =>{
     }
 })
 dataTileRed.addEventListener('click', (event) =>{
-    console.log("clicked")
     if (on){
-        playerOrder.push(4);
+        playerOrder.push(3);
         check()
         redBtn()
         if(!win){
@@ -181,13 +175,15 @@ function check(){
     if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1])
     good = false;
 
-    if (playerOrder.length == 12 && good) {
+    if (playerOrder.length == finalLevel && good) {
         winGame()
     }
 
     if(good == false){
         flashColor();
         startingLevel.innerHTML = "wrong"
+        wrongAudio()
+
         setTimeout(() => {
             startingLevel.innerHTML = turn;
             clearColor();
@@ -206,6 +202,7 @@ function check(){
 
 function winGame(){
     flashColor();
+    gameWinAudio()
     startingLevel.innerHTML = "You Win!"
     on = false;
     win = true;
