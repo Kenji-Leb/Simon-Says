@@ -184,6 +184,7 @@ function check(){
 
         setTimeout(() => {
             startingLevel.innerHTML = 0;
+            gameOverAudio()
             clearColor();
         }, 800)
     }
