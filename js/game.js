@@ -173,18 +173,17 @@ function check(){
     good = false;
 
     if (playerOrder.length == finalLevel && good) {
-        
+        highScore.innerHTML = turn
         winGame()
     }
 
     if(good == false){
         flashColor();
         wrongAudio()
-        startingLevel.innerHTML = 0
         highScore.innerHTML = turn
 
         setTimeout(() => {
-            startingLevel.innerHTML = turn;
+            startingLevel.innerHTML = 0;
             clearColor();
         }, 800)
     }
