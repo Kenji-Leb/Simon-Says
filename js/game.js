@@ -109,10 +109,10 @@ function gameTurn(){
     if (compTurn){
         clearColor();
         setTimeout(() => {
-            if (order[flash] == 1) blueBtn();
-            if (order[flash] == 2) yellowBtn();
-            if (order[flash] == 3) redBtn();
-            if (order[flash] == 4) greenBtn();
+            if (order[flash] == 0) blueBtn();
+            if (order[flash] == 1) yellowBtn();
+            if (order[flash] == 2) redBtn();
+            if (order[flash] == 3) greenBtn();
             flash++;
         }, 200)
     }
@@ -121,7 +121,7 @@ function gameTurn(){
 
 dataTileGreen.addEventListener('click', (event) =>{
     if (on){
-        playerOrder.push(4);
+        playerOrder.push(3);
         check()
         greenBtn()
         if(!win){
@@ -133,7 +133,7 @@ dataTileGreen.addEventListener('click', (event) =>{
 })
 dataTileBlue.addEventListener('click', (event) =>{
     if (on){
-        playerOrder.push(1);
+        playerOrder.push(0);
         check()
         blueBtn()
         if(!win){
@@ -145,7 +145,7 @@ dataTileBlue.addEventListener('click', (event) =>{
 })
 dataTileYellow.addEventListener('click', (event) =>{
     if (on){
-        playerOrder.push(2);
+        playerOrder.push(1);
         check()
         yellowBtn()
         if(!win){
@@ -157,7 +157,7 @@ dataTileYellow.addEventListener('click', (event) =>{
 })
 dataTileRed.addEventListener('click', (event) =>{
     if (on){
-        playerOrder.push(3);
+        playerOrder.push(2);
         check()
         redBtn()
         if(!win){
