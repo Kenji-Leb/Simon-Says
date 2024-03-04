@@ -12,7 +12,6 @@ const dataTileRed = document.querySelector('[data-tile="red"]');
 const dataTileBlue = document.querySelector('[data-tile="blue"]'); 
 
 const finalLevel = 12;
-let level = 0;
 let highScore = startingHighscore;
 let win;
 let turn;
@@ -81,9 +80,8 @@ startBtn.addEventListener('click', (event) => {
 function startGame(){
 
     win = false;
-    order = []
-    playerOrder = []
-    highScore = 0;
+    order = [];
+    playerOrder = [];
     startingLevel.innerHTML = 1;
     turn = 1;
     flash = 0;
@@ -175,15 +173,15 @@ function check(){
     good = false;
 
     if (playerOrder.length == finalLevel && good) {
+        
         winGame()
     }
 
     if(good == false){
         flashColor();
-        startingLevel.innerHTML = "wrong"
         wrongAudio()
-        highScore = level
-        level = 0
+        startingLevel.innerHTML = 0
+        highScore.innerHTML = turn
 
         setTimeout(() => {
             startingLevel.innerHTML = turn;
