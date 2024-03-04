@@ -1,9 +1,8 @@
 const audioFile = ['blue','green','yellow','red','wrong','game-over','game-win']
 
-const dataTileColors = ['green','blue','yellow','red']
-const gameBoard = document.querySelector(".board")
 const startBtn = document.getElementById("play")
 const startingLevel = document.getElementById("level")
+const startingHighscore = document.getElementById("high-score")
 
 //[data-tile="green"]
 
@@ -14,7 +13,7 @@ const dataTileBlue = document.querySelector('[data-tile="blue"]');
 
 const finalLevel = 12;
 let level = 0;
-let highScore = 0;
+let highScore = startingHighscore;
 let win;
 let turn;
 let compTurn;
@@ -113,9 +112,9 @@ function gameTurn(){
         clearColor();
         setTimeout(() => {
             if (order[flash] == 1) blueBtn();
-            if (order[flash] == 2) greenBtn();
-            if (order[flash] == 3) yellowBtn();
-            if (order[flash] == 4) redBtn();
+            if (order[flash] == 2) yellowBtn();
+            if (order[flash] == 3) redBtn();
+            if (order[flash] == 4) greenBtn();
             flash++;
         }, 200)
     }
@@ -124,7 +123,7 @@ function gameTurn(){
 
 dataTileGreen.addEventListener('click', (event) =>{
     if (on){
-        playerOrder.push(0);
+        playerOrder.push(4);
         check()
         greenBtn()
         if(!win){
@@ -183,6 +182,8 @@ function check(){
         flashColor();
         startingLevel.innerHTML = "wrong"
         wrongAudio()
+        highScore = level
+        level = 0
 
         setTimeout(() => {
             startingLevel.innerHTML = turn;
